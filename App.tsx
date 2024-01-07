@@ -1,4 +1,4 @@
-import "react-native-get-random-values";
+import "shim";
 import { StatusBar } from "expo-status-bar";
 import React, { useLayoutEffect, useState } from "react";
 import { Text, View } from "react-native";
@@ -12,6 +12,8 @@ export default function App() {
     const account = Account.generateNewAccount(NetworkType.TEST_NET);
     setPrivateKey(account.privateKey);
     setAddress(account.address.pretty());
+    // console.log("expo", Crypto.randomBytes);
+    // console.log(Crypto.randomBytes(new Uint8Array(16)));
   }, []);
 
   return (
