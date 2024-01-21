@@ -1,32 +1,23 @@
-import "shim";
 import { StatusBar } from "expo-status-bar";
-import React, { useLayoutEffect, useState } from "react";
-import { Text, View } from "react-native";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
 import { Account, NetworkType } from "symbol-sdk";
 
-export default function App() {
-  const [privateKey, setPrivateKey] = useState<string>("");
-  const [address, setAddress] = useState<string>("");
-
-  useLayoutEffect(() => {
-    const account = Account.generateNewAccount(NetworkType.TEST_NET);
-    setPrivateKey(account.privateKey);
-    setAddress(account.address.pretty());
-    // console.log("expo", Crypto.randomBytes);
-    // console.log(Crypto.randomBytes(new Uint8Array(16)));
+export default function App(): JSX.Element {
+  React.useEffect(() => {
+    const tanaka = Account.generateNewAccount(NetworkType.TEST_NET);
+    const suzuki = Account.generateNewAccount(NetworkType.TEST_NET);
+    console.log("tanaka key", tanaka.privateKey);
+    console.log(
+      "tanaka encrypted",
+      tanaka.encryptMessage("hello", suzuki.publicAccount)
+    );
   }, []);
-
   return (
-    <View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
-      <Text>Hello Symbol BlockChain!!</Text>
-      <Text style={{ marginTop: 20, textAlign: "left" }}>
-        アカウントの秘密鍵（第三者には共有してはなりません）
+    <View className="flex-1 justify-center items-center">
+      <Text className="font-bold">
+        Open up App.js to start working on your app!
       </Text>
-      <Text style={{ marginTop: 10, textAlign: "left" }}>{privateKey}</Text>
-      <Text style={{ marginTop: 20, textAlign: "left" }}>
-        アカウントのアドレス
-      </Text>
-      <Text style={{ marginTop: 10, textAlign: "left" }}>{address}</Text>
       <StatusBar style="auto" />
     </View>
   );

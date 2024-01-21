@@ -1,10 +1,7 @@
-module.exports = {
-  resolver: {
-    extraNodeModules: {
-      crypto: require.resolve("symbol-crypto-for-rn"),
-      events: require.resolve("events"),
-      stream: require.resolve("readable-stream"),
-      buffer: require.resolve("buffer"),
-    },
-  },
-};
+// Learn more https://docs.expo.io/guides/customizing-metro
+const { getDefaultConfig } = require('expo/metro-config');
+
+/** @type {import('expo/metro-config').MetroConfig} */
+const config = getDefaultConfig(__dirname);
+
+module.exports = config;
