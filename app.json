@@ -8,6 +8,9 @@
     ],
     "experiments": {
       "tsconfigPaths": false
-    }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
