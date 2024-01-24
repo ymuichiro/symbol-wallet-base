@@ -6,7 +6,7 @@
     "generators": {
       "main": {
         "generatorName": "typescript-fetch",
-        "output": "src/services/node-client",
+        "output": "services/node-client",
         "enablePostProcessFile": true,
         "inputSpec": "specs/node-openapi.yml",
         "globalProperty": {
