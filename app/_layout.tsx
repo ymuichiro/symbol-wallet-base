@@ -1,74 +1,60 @@
 import "../shim";
 import React from "react";
-import { Stack, usePathname } from "expo-router";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import { Drawer } from "expo-router/drawer";
+import { usePathname, Stack, Link, router } from "expo-router";
+import IonIcon from "@expo/vector-icons/Ionicons";
+import { Pressable } from "react-native";
 
 export default function RootLayout(): JSX.Element {
   const pathname = usePathname();
   console.log("current path", pathname);
 
+  const handleHeaderRightClickForPage = () => {
+    return (
+      <Link href={"/account"}>
+        <IonIcon name="person-circle-outline" size={28} />
+      </Link>
+    );
+  };
+
+  const handleHeaderLeftClickForModal = () => {
+    return (
+      <Pressable onPress={() => router.back()}>
+        <IonIcon name="close" size={28} />
+      </Pressable>
+    );
+  };
+
   return (
-    <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <Drawer>
-          <Drawer.Screen
-            name="index"
-            options={{
-              drawerLabel: "Wallets",
-              title: "Wallets",
-              headerShown: true,
-            }}
-          />
-          <Drawer.Screen
-            name="advanced"
-            options={{
-              drawerLabel: "Advanced",
-              title: "Advanced",
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="help"
-            options={{
-              drawerLabel: "Help",
-              title: "Help",
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="terms"
-            options={{
-              drawerLabel: "Terms",
-              title: "Terms",
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="account"
-            options={{
-              drawerLabel: "Account",
-              title: "Account",
-              headerShown: false,
-            }}
-          />
-          {/* hidden screens */}
-          <Drawer.Screen
-            name="login"
-            options={{
-              drawerItemStyle: { display: "none" },
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name="wallet"
-            options={{
-              drawerItemStyle: { display: "none" },
-              headerShown: false,
-            }}
-          />
-        </Drawer>
-      </GestureHandlerRootView>
-    </>
+    <Stack initialRouteName="index">
+      <Stack.Screen
+        name="index"
+        options={{
+          title: "Wallets",
+          headerShown: true,
+          headerRight: handleHeaderRightClickForPage,
+        }}
+      />
+      <Stack.Screen
+        name="account"
+        options={{
+          title: "Account",
+          headerShown: true,
+          presentation: "modal",
+          headerLeft: handleHeaderLeftClickForModal,
+        }}
+      />
+      <Stack.Screen
+        name="login"
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
+        name="wallet"
+        options={{
+          headerShown: true,
+        }}
+      />
+    </Stack>
   );
 }
