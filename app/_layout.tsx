@@ -2,11 +2,14 @@ import "../shim";
 import React from "react";
 import { usePathname, Stack, Link, router } from "expo-router";
 import IonIcon from "@expo/vector-icons/Ionicons";
-import { Pressable } from "react-native";
+import { Pressable, useColorScheme } from "react-native";
+import { useLoadedAssets } from "@/hooks/useLoadedAssets";
 
 export default function RootLayout(): JSX.Element {
   const pathname = usePathname();
-  console.log("current path", pathname);
+  const isLoadingComplete = useLoadedAssets();
+  const colorSchema = useColorScheme();
+  console.log("mode", { pathname, colorSchema, isLoadingComplete });
 
   const handleHeaderRightClickForPage = () => {
     return (
