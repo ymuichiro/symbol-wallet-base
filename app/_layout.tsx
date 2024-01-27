@@ -1,9 +1,14 @@
 import "../shim";
 import React from "react";
-import { usePathname, Stack, Link, router } from "expo-router";
+import { usePathname, Stack, Link, router, SplashScreen } from "expo-router";
 import IonIcon from "@expo/vector-icons/Ionicons";
 import { Pressable, useColorScheme } from "react-native";
 import { useLoadedAssets } from "@/hooks/useLoadedAssets";
+
+// Catch any errors thrown by the Layout component.
+export { ErrorBoundary } from "expo-router";
+// Prevent the splash screen from auto-hiding before asset loading is complete.
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout(): JSX.Element {
   const pathname = usePathname();
