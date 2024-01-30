@@ -4,6 +4,7 @@ import { usePathname, Stack, Link, router, SplashScreen } from "expo-router";
 import IonIcon from "@expo/vector-icons/Ionicons";
 import { Pressable, useColorScheme } from "react-native";
 import { useLoadedAssets } from "@/hooks/useLoadedAssets";
+import { NodeService } from "@/services/node/NodeService";
 
 // Catch any errors thrown by the Layout component.
 export { ErrorBoundary } from "expo-router";

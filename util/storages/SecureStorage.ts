@@ -9,8 +9,7 @@ export class SecureStorage {
 
   public async getItem(): Promise<string | null> {
     try {
-      const value = await SecureStore.getItemAsync(this.key);
-      return value;
+      return (await SecureStore.getItemAsync(this.key)) as string | null;
     } catch (error) {
       throw new Error(`Error when trying to get item from SecureStore: ${error}`);
     }

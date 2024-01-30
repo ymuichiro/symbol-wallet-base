@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "symbol-wallet-base",
-    "slug": "symbol-wallet-base",
+    "slug": "symbol-wallet",
     "version": "1.0.0",
     "scheme": "symbol-wallet-base",
     "assetBundlePatterns": [
