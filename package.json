@@ -7,7 +7,8 @@
     "start": "expo start --dev-client",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "postinstall": "rn-nodeify --install 'buffer,crypto,events,process,stream' --hack"
+    "postinstall": "rn-nodeify --install 'buffer,crypto,events,process,stream' --hack",
+    "format": "npx prettier --write '**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "1.21.0",
