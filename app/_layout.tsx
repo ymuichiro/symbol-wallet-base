@@ -1,13 +1,13 @@
-import "../shim";
-import React from "react";
-import { usePathname, Stack, Link, router, SplashScreen } from "expo-router";
-import IonIcon from "@expo/vector-icons/Ionicons";
-import { Pressable, useColorScheme } from "react-native";
-import { useLoadedAssets } from "@/hooks/useLoadedAssets";
-import { NodeService } from "@/services/node/NodeService";
+import '../shim';
+import React from 'react';
+import { usePathname, Stack, Link, router, SplashScreen } from 'expo-router';
+import IonIcon from '@expo/vector-icons/Ionicons';
+import { Pressable, useColorScheme } from 'react-native';
+import { useLoadedAssets } from '@/hooks/useLoadedAssets';
+import { NodeService } from '@/services/node/NodeService';
 
 // Catch any errors thrown by the Layout component.
-export { ErrorBoundary } from "expo-router";
+export { ErrorBoundary } from 'expo-router';
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
@@ -15,12 +15,12 @@ export default function RootLayout(): JSX.Element {
   const pathname = usePathname();
   const isLoadingComplete = useLoadedAssets();
   const colorSchema = useColorScheme();
-  console.log("mode", { pathname, colorSchema, isLoadingComplete });
+  console.log('mode', { pathname, colorSchema, isLoadingComplete });
 
   const handleHeaderRightClickForPage = () => {
     return (
-      <Link href={"/account"}>
-        <IonIcon name="person-circle-outline" size={28} />
+      <Link href={'/account'}>
+        <IonIcon name='person-circle-outline' size={28} />
       </Link>
     );
   };
@@ -28,38 +28,38 @@ export default function RootLayout(): JSX.Element {
   const handleHeaderLeftClickForModal = () => {
     return (
       <Pressable onPress={() => router.back()}>
-        <IonIcon name="close" size={28} />
+        <IonIcon name='close' size={28} />
       </Pressable>
     );
   };
 
   return (
-    <Stack initialRouteName="index">
+    <Stack initialRouteName='index'>
       <Stack.Screen
-        name="index"
+        name='index'
         options={{
-          title: "Wallets",
+          title: 'Wallets',
           headerShown: true,
           headerRight: handleHeaderRightClickForPage,
         }}
       />
       <Stack.Screen
-        name="account"
+        name='account'
         options={{
-          title: "Account",
+          title: 'Account',
           headerShown: true,
-          presentation: "modal",
+          presentation: 'modal',
           headerLeft: handleHeaderLeftClickForModal,
         }}
       />
       <Stack.Screen
-        name="login"
+        name='login'
         options={{
           headerShown: false,
         }}
       />
       <Stack.Screen
-        name="wallet"
+        name='wallet'
         options={{
           headerShown: true,
         }}

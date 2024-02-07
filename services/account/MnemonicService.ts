@@ -1,5 +1,5 @@
-import { InvalidValueError } from "@/models/ErrorModels";
-import { MnemonicPassPhrase, ExtendedKey, Wallet, Network } from "symbol-hd-wallets";
+import { InvalidValueError } from '@/models/ErrorModels';
+import { MnemonicPassPhrase, ExtendedKey, Wallet, Network } from 'symbol-hd-wallets';
 
 export class MnemonicService {
   public readonly privateKey: string;
@@ -9,9 +9,12 @@ export class MnemonicService {
    * @param mnemonic format: "text text text"
    * @param seed hex string
    */
-  private constructor(public mnemonic: string, public seed: string) {
-    this.privateKey = "";
-    this.publicKey = "";
+  private constructor(
+    public mnemonic: string,
+    public seed: string
+  ) {
+    this.privateKey = '';
+    this.publicKey = '';
   }
 
   public getChildPrivateKey(height: number): string {
@@ -22,7 +25,7 @@ export class MnemonicService {
 
   static createRandom(): MnemonicService {
     const mnemonic = MnemonicPassPhrase.createRandom();
-    const seed = mnemonic.toSeed().toString("hex");
+    const seed = mnemonic.toSeed().toString('hex');
     return new MnemonicService(mnemonic.plain, seed);
   }
 
@@ -30,10 +33,10 @@ export class MnemonicService {
     const mnemonic = new MnemonicPassPhrase(mnemonicPhrase);
 
     if (!mnemonic.isValid()) {
-      throw new InvalidValueError("Incorrect mnemonic format");
+      throw new InvalidValueError('Incorrect mnemonic format');
     }
 
-    const seed = mnemonic.toSeed().toString("hex");
+    const seed = mnemonic.toSeed().toString('hex');
     return new MnemonicService(mnemonic.plain, seed);
   }
 }

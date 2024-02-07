@@ -1,4 +1,4 @@
-import RNAsyncStorage from "@react-native-async-storage/async-storage";
+import RNAsyncStorage from '@react-native-async-storage/async-storage';
 
 // re-export
 export class AsyncStorage {
