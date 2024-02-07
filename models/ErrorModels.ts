@@ -1,7 +1,7 @@
 export class ConnectionError extends Error {
   constructor(message?: string) {
     super(message);
-    this.name = "ConnectionError";
+    this.name = 'ConnectionError';
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
@@ -9,7 +9,7 @@ export class ConnectionError extends Error {
 export class StorageError extends Error {
   constructor(message?: string) {
     super(message);
-    this.name = "StorageError";
+    this.name = 'StorageError';
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
@@ -17,7 +17,7 @@ export class StorageError extends Error {
 export class InvalidValueError extends Error {
   constructor(message?: string) {
     super(message);
-    this.name = "InvalidValueError";
+    this.name = 'InvalidValueError';
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }

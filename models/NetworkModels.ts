@@ -1,4 +1,4 @@
-export type NetworkType = "testnet" | "mainnet";
+export type NetworkType = 'testnet' | 'mainnet';
 
 export interface NodeInfo {
   domain: string;

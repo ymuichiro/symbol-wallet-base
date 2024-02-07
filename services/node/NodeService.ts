@@ -1,6 +1,6 @@
-import { ConnectionError } from "@/models/ErrorModels";
-import { NetworkType, NodeInfo } from "@/models/NetworkModels";
-import { Configuration, NodeRoutesApi, NetworkRoutesApi } from "@/services/node-client";
+import { ConnectionError } from '@/models/ErrorModels';
+import { NetworkType, NodeInfo } from '@/models/NetworkModels';
+import { Configuration, NodeRoutesApi, NetworkRoutesApi } from '@/services/node-client';
 
 export class NodeService {
   static statisticsServer: string = process.env.EXPO_PUBLIC_STATICS_SERVER;
@@ -17,16 +17,16 @@ export class NodeService {
 
   /** get live node list from statics server */
   static async getListFromStatisticsServer(networkType: NetworkType): Promise<NodeInfo[]> {
-    const url = new URL("/nodes", this.statisticsServer);
-    url.searchParams.append("networkType", networkType);
+    const url = new URL('/nodes', this.statisticsServer);
+    url.searchParams.append('networkType', networkType);
     const res = await fetch(url.toString());
 
     if (res.status >= 200 && res.status <= 299) {
       const json = await res.json();
-      return json["nodes"];
+      return json['nodes'];
     } else if (res.status >= 400 && res.status <= 499) {
       const json = await res.json();
-      console.error("ERROR", json);
+      console.error('ERROR', json);
       throw new ConnectionError(`Statistics Server ${url.toString()} ${res.status} Error`);
     } else {
       throw new ConnectionError(`Statistics Server ${url.toString()} ${res.status} Error`);
@@ -37,7 +37,7 @@ export class NodeService {
   public async getStatus(): Promise<boolean> {
     try {
       const res = await this.nodeRoutes.getNodeHealth();
-      return res.status.apiNode === "up" && res.status.db === "up";
+      return res.status.apiNode === 'up' && res.status.db === 'up';
     } catch (err) {
       console.error(err);
       const message = err instanceof Error ? `${this.url} ${err.name} ${err.message}` : this.url;

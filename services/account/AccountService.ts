@@ -1,9 +1,9 @@
-import { WalletModel } from "@/models/AccountModel";
-import { StorageError } from "@/models/ErrorModels";
-import { NetworkType } from "@/models/NetworkModels";
-import { SecureStorage } from "@/util/storages/SecureStorage";
+import { WalletModel } from '@/models/AccountModel';
+import { StorageError } from '@/models/ErrorModels';
+import { NetworkType } from '@/models/NetworkModels';
+import { SecureStorage } from '@/util/storages/SecureStorage';
 
-const SECURE_STORAGE_KEY: string = "ACCOUNT_SERVICE";
+const SECURE_STORAGE_KEY: string = 'ACCOUNT_SERVICE';
 
 export class AccountService {
   public publicKey: string;
@@ -11,9 +11,9 @@ export class AccountService {
   public address: string;
 
   private constructor() {
-    this.privateKey = "";
-    this.address = "";
-    this.publicKey = "";
+    this.privateKey = '';
+    this.address = '';
+    this.publicKey = '';
   }
 
   static generateNewAccount(networkType: NetworkType): AccountService {
@@ -28,7 +28,7 @@ export class AccountService {
     const storage = new SecureStorage(SECURE_STORAGE_KEY);
     const item = await storage.getItem();
     if (!item) {
-      throw new StorageError("Failed to read from storage.");
+      throw new StorageError('Failed to read from storage.');
     }
 
     return JSON.parse(item) as WalletModel[];
@@ -49,14 +49,14 @@ export class AccountService {
     const storage = new SecureStorage(SECURE_STORAGE_KEY);
     const item = await storage.getItem();
     if (!item) {
-      throw new StorageError("Failed to read from storage.");
+      throw new StorageError('Failed to read from storage.');
     }
 
     const existingValues = JSON.parse(item) as WalletModel[];
     const specifiedValue = existingValues.filter((e) => e.name === name);
 
     if (specifiedValue.length !== 1) {
-      throw new StorageError("Failed to read from storage.");
+      throw new StorageError('Failed to read from storage.');
     }
 
     const writeValue = existingValues.filter((e) => e.name !== name);
