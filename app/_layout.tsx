@@ -1,11 +1,8 @@
 import '../shim';
-import React from 'react';
 import { usePathname, Stack, Link, router, SplashScreen } from 'expo-router';
 import IonIcon from '@expo/vector-icons/Ionicons';
 import { Pressable, useColorScheme } from 'react-native';
 import { useLoadedAssets } from '@/hooks/useLoadedAssets';
-import { NodeService } from '@/services/node/NodeService';
-
 import { StateProvider } from '@/states/context';
 
 // Catch any errors thrown by the Layout component.
