@@ -10,8 +10,7 @@ type ILoadWallets = {
 };
 
 /**
- * component のマウント時に global state 上に格納されている wallet の一覧を取得する
- * global state の length === 0 のときは SecureStorage より取得し、 global state を更新の上、返却する
+ * component のマウント時に SecureStorage 上に格納されている wallet の一覧を取得する
  */
 export function useLoadWallets(): ILoadWallets {
   const [isLoading, setIsLoading] = useState<boolean>(false);
