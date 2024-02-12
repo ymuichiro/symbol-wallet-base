@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState, FC } from 'react';
 
 import { Link } from 'expo-router';
 import { Button, View, Text, TextInput } from 'react-native';
@@ -7,7 +7,7 @@ import { useStateContext } from 'states/context';
 
 interface Props {}
 
-const NetworkPage: React.FC<Props> = (props: Props) => {
+const NetworkPage: FC<Props> = (props: Props) => {
   const { state, dispatch } = useStateContext();
   const [nodeInput, setNodeInput] = useState('');
 
