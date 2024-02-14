@@ -2,29 +2,13 @@ import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { Link } from 'expo-router';
 
-import { getLocales } from 'expo-localization';
-import { I18n } from 'i18n-js';
-
-// ロケールファイルのインポート
-import en from '@/locales/en.json';
-import ja from '@/locales/ja.json';
-
-const { languageCode } = getLocales()[0];
-
-// I18nの設定
-const i18n = new I18n({
-  en,
-  ja,
-});
-i18n.defaultLocale = 'en';
-i18n.locale = languageCode;
+import { useI18n } from '@/states/i18nContext';
 
 export default function Root(): React.JSX.Element {
-  const [lang, setLang] = React.useState<string>(languageCode);
+  const { t, locale, setLocale } = useI18n();
   const toggleLanguage = () => {
-    const _lang = lang === 'en' ? 'ja' : 'en';
-    i18n.locale = _lang;
-    setLang(_lang);
+    const lang = locale === 'en' ? 'ja' : 'en';
+    setLocale(lang);
   };
 
   return (
@@ -37,8 +21,8 @@ export default function Root(): React.JSX.Element {
       </Link>
 
       <Button title='言語を切り替え' onPress={toggleLanguage} />
-      <Text>言語:{lang}</Text>
-      <Text>秘密鍵を翻訳:{i18n.t('common.privateKey')}</Text>
+      <Text>言語:{locale}</Text>
+      <Text>秘密鍵を翻訳→→{t('common.privateKey')}</Text>
     </View>
   );
 }
