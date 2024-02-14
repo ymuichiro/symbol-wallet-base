@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { Link } from 'expo-router';
+import { useLoadWallets } from '@/hooks/useLoadWallets';
 
 import { useI18n } from '@/states/i18nContext';
 
@@ -10,6 +11,9 @@ export default function Root(): React.JSX.Element {
     const lang = locale === 'en' ? 'ja' : 'en';
     setLocale(lang);
   };
+  const { isLoading, error, wallets } = useLoadWallets();
+
+  console.log(isLoading, error, wallets);
 
   return (
     <View className='flex-1 justify-center items-center gap-3'>
