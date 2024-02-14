@@ -4,12 +4,7 @@
     "slug": "symbol-wallet",
     "version": "1.0.0",
     "scheme": "symbol-wallet-base",
-    "assetBundlePatterns": [
-      "**/*"
-    ],
-    "plugins": [
-      "expo-secure-store",
-      "expo-router"
-    ]
+    "assetBundlePatterns": ["**/*"],
+    "plugins": ["expo-secure-store", "expo-router", "expo-localization"]
   }
 }
