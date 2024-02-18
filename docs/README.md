@@ -18,7 +18,7 @@
 * `components`: `app` で使用する共通 component を定義しています。
 * `hooks`: `app` または `components` で使用する hooks を定義しています。
 * `models`: 全体で使用する interface を定義しています。
-* `controller`: service を使用して `app` 向けの各種 api を定義します。
+* `controller`: `service` を使用して `app` 向けの各種 api を定義します。
 * `service`: アプリのビジネスロジックを定義します。
 * `util`: 全体で使用する共通の処理系を定義します。
 
@@ -45,7 +45,7 @@
 
 ## ライセンス
 
-本リポジトリは MIT License 2.0: https://github.com/ymuichiro/symbol-wallet-base/blob/main/LICENSE のもとで公開されています。
+本リポジトリは MIT License: https://github.com/ymuichiro/symbol-wallet-base/blob/main/LICENSE のもとで公開されています。
 
 ## 謝辞
 
