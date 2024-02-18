@@ -1,14 +1,16 @@
+/*
+
+  ニーモニックの発行や SecureStorage への書き込み、削除機能を提供します。
+
+*/
+
 import { MnemonicModel } from '@/models/AccountModel';
 import { InvalidValueError, StorageError } from '@/models/ErrorModels';
+import { STORAGE_KEYS } from '@/util/configs/storage-keys';
 import { SecureStorage } from '@/util/storages/SecureStorage';
 import { MnemonicPassPhrase, ExtendedKey, Wallet, Network } from 'symbol-hd-wallets';
 
-const SECURE_STORAGE_KEY: string = 'MNEMONIC_SERVICE';
-
-export class MnemonicService {
-  public readonly privateKey: string;
-  public readonly publicKey: string;
-
+export class MnemonicService extends SecureStorage {
   /**
    * @param mnemonic format: "text text text"
    * @param seed hex string
@@ -17,16 +19,10 @@ export class MnemonicService {
     public mnemonic: string,
     public seed: string
   ) {
-    this.privateKey = '';
-    this.publicKey = '';
+    super(STORAGE_KEYS.secure.MNEMONIC);
   }
 
-  public getChildPrivateKey(height: number): string {
-    const xkey = ExtendedKey.createFromSeed(this.seed, Network.SYMBOL);
-    const wallet = new Wallet(xkey);
-    return wallet.getChildAccountPrivateKey(`m/44'/4343'/0'/0'/${height}'`);
-  }
-
+  /** ランダムな mnemonic を作成して MnemonicService インスタンスを返却する */
   public static createRandom(): MnemonicService {
     const mnemonic = MnemonicPassPhrase.createRandom();
     const seed = mnemonic.toSeed().toString('hex');
@@ -35,14 +31,15 @@ export class MnemonicService {
 
   /** ローカルストレージに保存されたニーモニックを返却する */
   public static async getFromStorage() {
-    const storage = new SecureStorage(SECURE_STORAGE_KEY);
-    const item = await storage.getItem();
+    const storage = new SecureStorage(STORAGE_KEYS.secure.MNEMONIC);
+    const item: MnemonicModel | null = JSON.parse(await storage.getSecretItem());
     if (!item) {
       throw new StorageError('Failed to read from storage.');
     }
-    return JSON.parse(item) as MnemonicModel;
+    return item;
   }
 
+  /** ニーモニックフレーズより MnemonicService インスタンスを返却する */
   public static generateFromPhrase(mnemonicPhrase: string): MnemonicService {
     const mnemonic = new MnemonicPassPhrase(mnemonicPhrase);
     if (!mnemonic.isValid()) {
@@ -52,12 +49,18 @@ export class MnemonicService {
     return new MnemonicService(mnemonic.plain, seed);
   }
 
+  /** 現在の MnemonicSerivde インスタンスの Mnemonic より、子PrivateKey を生成する */
+  public getChildPrivateKey(height: number): string {
+    const xkey = ExtendedKey.createFromSeed(this.seed, Network.SYMBOL);
+    const wallet = new Wallet(xkey);
+    return wallet.getChildAccountPrivateKey(`m/44'/4343'/0'/0'/${height}'`);
+  }
+
   /** ニーモニックをストレージへ保存する。デバイスにつきニーモニックは1つとする */
   public async replaceToStorage(): Promise<void> {
     try {
-      const storage = new SecureStorage(SECURE_STORAGE_KEY);
       const item = JSON.stringify({ mnemonic: this.mnemonic } as MnemonicModel);
-      await storage.setItem(item);
+      await this.setSecretItem(item);
     } catch (err) {
       console.error(err);
     }

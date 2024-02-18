@@ -1,4 +1,4 @@
-import { AccountService } from '@/services/account/AccountService';
+import { AccountService } from '@/services/AccountService';
 import { SecureStorage } from '@/util/storages/SecureStorage';
 import { Link } from 'expo-router';
 import { View, Text, Button } from 'react-native';
@@ -17,7 +17,7 @@ export default function LoginRoot(props: Props): React.JSX.Element {
           AccountService.generateNewAccount('testnet');
         }}
       />
-      <Button title='検証用 WALLET 削除' onPress={() => new SecureStorage('ACCOUNT_SERVICE').removeItem()} />
+      <Button title='検証用 WALLET 削除' onPress={() => new SecureStorage('ACCOUNT_SERVICE').resetSecretItem()} />
     </View>
   );
 }

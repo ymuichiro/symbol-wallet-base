@@ -1,6 +1,6 @@
 import { WalletModel } from '@/models/AccountModel';
 import { StorageError } from '@/models/ErrorModels';
-import { AccountService } from '@/services/account/AccountService';
+import { AccountService } from '@/services/AccountService';
 import { useState, useEffect } from 'react';
 
 type ILoadWallets = {

@@ -7,7 +7,7 @@ export class SecureStorage {
     this.key = key;
   }
 
-  public async getItem(): Promise<string | null> {
+  public async getSecretItem(): Promise<string | null> {
     try {
       return (await SecureStore.getItemAsync(this.key)) as string | null;
     } catch (error) {
@@ -15,7 +15,7 @@ export class SecureStorage {
     }
   }
 
-  public async setItem(value: string): Promise<void> {
+  public async setSecretItem(value: string): Promise<void> {
     try {
       await SecureStore.setItemAsync(this.key, value);
     } catch (error) {
@@ -23,13 +23,11 @@ export class SecureStorage {
     }
   }
 
-  public async removeItem(): Promise<void> {
+  public async resetSecretItem(): Promise<void> {
     try {
       await SecureStore.deleteItemAsync(this.key);
     } catch (error) {
       throw new Error(`Error when trying to remove item from SecureStore: ${error}`);
     }
   }
-
-  // Note: SecureStore does not provide a clear all method similar to AsyncStorage.
 }

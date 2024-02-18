@@ -1,11 +1,9 @@
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
-import { useLoadWallets } from '@/hooks/useLoadWallets';
 
 export default function Root(): React.JSX.Element {
-  const { isLoading, error, wallets } = useLoadWallets();
-
-  console.log(isLoading, error, wallets);
+  // const { balance, error, isLoading } = useGetCurrentBalance('NCZQM2TT6V7QET26NMW2I6ZNKB4PDWZJHUJSK3Q');
+  // console.log(balance, error, isLoading);
 
   return (
     <View className='flex-1 justify-center items-center gap-3'>

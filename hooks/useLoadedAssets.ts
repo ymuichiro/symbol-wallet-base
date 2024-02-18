@@ -1,4 +1,4 @@
-import { AccountService } from '@/services/account/AccountService';
+import { AccountService } from '@/services/AccountService';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Font from 'expo-font';
 import { router } from 'expo-router';
