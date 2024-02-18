@@ -9,6 +9,8 @@ export interface NodeInfo {
 export interface NetworkProperty {
   identifier: string;
   currencyMosaicId: string;
+  currencyDivisibility: number;
+  currencyNamespaceId: string;
   generationHashSeed: string;
   epochAdjustment: number;
   explorerServerUrl: string;

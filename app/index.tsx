@@ -1,9 +1,10 @@
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
+import { useGetCurrentBalance } from '@/hooks/useGetCurrentBalance';
 
 export default function Root(): React.JSX.Element {
-  // const { balance, error, isLoading } = useGetCurrentBalance('NCZQM2TT6V7QET26NMW2I6ZNKB4PDWZJHUJSK3Q');
-  // console.log(balance, error, isLoading);
+  const { balance, error, isLoading, mosaics } = useGetCurrentBalance('NCZQM2TT6V7QET26NMW2I6ZNKB4PDWZJHUJSK3Q');
+  console.log(balance, error, isLoading, mosaics);
 
   return (
     <View className='flex-1 justify-center items-center gap-3'>

@@ -1,4 +1,4 @@
-import { AccountService } from '@/services/AccountService';
+import { AccountController } from '@/controller/AccountController';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Font from 'expo-font';
 import { router } from 'expo-router';
@@ -17,7 +17,7 @@ export function useLoadedAssets(): boolean {
         await Font.loadAsync(Ionicons.font);
 
         // 起動時にストレージが存在しない場合はログインページへ遷移
-        await AccountService.getFromStorage()
+        await AccountController.getWalletList()
           .then((wallets) => (!wallets || wallets.length === 0) && router.replace('login'))
           .catch(() => router.replace('login'));
       } catch (e) {

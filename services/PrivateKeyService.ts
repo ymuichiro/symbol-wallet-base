@@ -30,7 +30,7 @@ export class PrivateKeyService extends SecureStorage {
     }
 
     this.privateKey = Buffer.from(privateKey).toString('hex');
-    const keypair = nacl.sign.keyPair.fromSeed(new Uint8Array());
+    const keypair = nacl.sign.keyPair.fromSeed(privateKey);
     this.publicKey = Buffer.from(keypair.publicKey).toString('hex');
   }
 
@@ -41,7 +41,8 @@ export class PrivateKeyService extends SecureStorage {
 
   /** ランダムな秘密鍵の発行し PrivateKeyService を作成する */
   public static generateNewPrivateKey(): PrivateKeyService {
-    return new PrivateKeyService(getRandomBytes(32));
+    const v = getRandomBytes(32);
+    return new PrivateKeyService(v);
   }
 
   /** 秘密鍵文字列より PrivateKeyService を作成する */
@@ -81,13 +82,15 @@ export class PrivateKeyService extends SecureStorage {
   /** 現在の秘密鍵を SecureStorage へ保管する。同一 NetworkType かつ秘密鍵文字列がある場合は ERROR */
   public async setToStorage(networkType: NetworkType): Promise<PrivateKeyModel> {
     // 重複の検証
-    const oldData: PrivateKeyModel[] | null = JSON.parse(await this.getSecretItem());
+    let oldData: PrivateKeyModel[] | null = JSON.parse(await this.getSecretItem());
     if (oldData) {
       for (const v of oldData) {
         if (v.privateKey === this.privateKey && v.networkType === networkType) {
           throw new InvalidValueError('Duplicate private key');
         }
       }
+    } else {
+      oldData = [];
     }
     // 書き込み
     const id = randomUUID();

@@ -1,6 +1,6 @@
 import { WalletModel } from '@/models/AccountModel';
 import { StorageError } from '@/models/ErrorModels';
-import { AccountService } from '@/services/AccountService';
+import { AccountController } from '@/controller/AccountController';
 import { useState, useEffect } from 'react';
 
 type ILoadWallets = {
@@ -20,7 +20,7 @@ export function useLoadWallets(): ILoadWallets {
   useEffect(() => {
     let unmounted = false;
     setIsLoading(true);
-    AccountService.getFromStorage()
+    AccountController.getWalletList()
       .then((w) => {
         if (unmounted) return;
         setWallets([...w]);

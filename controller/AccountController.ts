@@ -56,7 +56,7 @@ export class AccountController {
   /**
    * 使用可能な Wallet の一覧を取得する
    */
-  public async getWalletList(): Promise<WalletModel[]> {
+  public static async getWalletList(): Promise<WalletModel[]> {
     return await WalletService.getWallets();
   }
 
