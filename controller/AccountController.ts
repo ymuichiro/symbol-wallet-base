@@ -6,7 +6,7 @@
 
 */
 
-import { PrivateKeyModel, WalletModel } from '@/models/AccountModel';
+import { WalletModel } from '@/models/AccountModel';
 import { InvalidValueError } from '@/models/ErrorModels';
 import { NetworkType } from '@/models/NetworkModels';
 import { AddressService } from '@/services/AddressService';

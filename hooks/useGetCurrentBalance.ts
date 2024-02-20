@@ -1,7 +1,6 @@
-import { MosaicRestService } from '@/services/MosaicRestService';
+import { AccountInfoController } from '@/controller/AccountInfoController';
 import { Mosaic } from '@/models/MosaicModel';
-import { getNetworkTypeToAddressChatAt0 } from '@/util/symbol/network';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 
 type IResult = {
   isLoading: boolean;
@@ -29,31 +28,29 @@ export function useGetCurrentBalance(address: string): IResult {
   const [mosaics, setMosaics] = useState<Mosaic[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
-  const node = 'https://symbolnode.blockchain-authn.app:3001'; // 暫定
+  const controller = useMemo(
+    // ノードURL は暫定実装
+    () => new AccountInfoController('https://symbolnode.blockchain-authn.app:3001/', address),
+    [address]
+  );
 
   useEffect(() => {
     let unmounted = false;
     setIsLoading(true);
     setError(null);
-    const run = async () => {
-      try {
-        const networkType = getNetworkTypeToAddressChatAt0(address);
-        const mosaicRest = new MosaicRestService(node, networkType);
-        const { currency, unresolvedMosaics } = await mosaicRest.getBalanceByAddress(address);
-        // 主軸通貨の情報更新
-        if (!unmounted) setBalance(currency.amount);
-
-        // モザイク情報の解決と情報更新
-        const resolvedMosaics = await mosaicRest.resolveMosaics(unresolvedMosaics);
-        if (!unmounted) setMosaics(resolvedMosaics);
-      } catch (err) {
+    controller
+      .getAccountInfo()
+      .then((res) => {
+        if (!unmounted) setMosaics(res.mosaics);
+        if (!unmounted) setBalance(res.balance);
+      })
+      .catch((err) => {
         console.error(err);
         if (!unmounted) setError(err);
-      } finally {
+      })
+      .finally(() => {
         if (!unmounted) setIsLoading(false);
-      }
-    };
-    run();
+      });
     return () => {
       unmounted = true;
     };
@@ -62,21 +59,19 @@ export function useGetCurrentBalance(address: string): IResult {
   const refresh = async () => {
     setIsLoading(true);
     setError(null);
-    try {
-      const networkType = getNetworkTypeToAddressChatAt0(address);
-      const mosaicRest = new MosaicRestService(node, networkType);
-      const { currency, unresolvedMosaics } = await mosaicRest.getBalanceByAddress(address);
-      // 主軸通貨の情報更新
-      setBalance(currency.amount);
-      // モザイク情報の解決と情報更新
-      const resolvedMosaics = await mosaicRest.resolveMosaics(unresolvedMosaics);
-      setMosaics(resolvedMosaics);
-    } catch (err) {
-      console.error(err);
-      setError(err);
-    } finally {
-      setIsLoading(false);
-    }
+    controller
+      .getAccountInfo()
+      .then((res) => {
+        setMosaics(res.mosaics);
+        setBalance(res.balance);
+      })
+      .catch((err) => {
+        console.error(err);
+        setError(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   return { isLoading, balance, mosaics, error, refresh };

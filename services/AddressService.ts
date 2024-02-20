@@ -8,7 +8,7 @@
 import { NetworkType } from '@/models/NetworkModels';
 import { rawArrayCopy, rawArrayDeepEqual, rawArrayUint8View } from '@/util/symbol/array';
 import { base32Decode, base32Encode } from '@/util/symbol/base32';
-import { getNetworkTypeToAddressChatAt0, strNetworkTypeToHexadecimal } from '@/util/symbol/network';
+import { strNetworkTypeToHexadecimal } from '@/util/symbol/network';
 import { sha3_256 } from 'js-sha3';
 import ripemd160 from 'ripemd160';
 
@@ -31,10 +31,7 @@ export class AddressService {
    * @param address
    * @param networkType
    */
-  private constructor(
-    private readonly address: string,
-    private readonly networkType: NetworkType
-  ) {}
+  private constructor(private readonly address: string) {}
 
   /**
    * Converts a decoded address to an encoded address string.
@@ -104,7 +101,7 @@ export class AddressService {
       AddressService.constants.sizes.ripemd160 + 1
     );
     // convert to Base32 and create instance
-    return new AddressService(this.addressToBase32(decodedAddress), networkType);
+    return new AddressService(this.addressToBase32(decodedAddress));
   }
 
   /**
@@ -117,9 +114,7 @@ export class AddressService {
     if (addressTrimAndUpperCase.length !== 39) {
       throw new Error('Address ' + addressTrimAndUpperCase + ' has to be 39 characters long');
     }
-    // ネットワークタイプ取得
-    const networkType = getNetworkTypeToAddressChatAt0(addressTrimAndUpperCase);
-    return new AddressService(addressTrimAndUpperCase, networkType);
+    return new AddressService(addressTrimAndUpperCase);
   }
 
   /**
