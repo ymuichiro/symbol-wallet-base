@@ -3,7 +3,7 @@ import { Button, View, Text } from 'react-native';
 import { Link } from 'expo-router';
 import { useLoadWallets } from '@/hooks/useLoadWallets';
 
-import { useI18n } from '@/states/i18nContext';
+import { useI18n } from '@/hooks/useI18n';
 
 export default function Root(): React.JSX.Element {
   const { t, locale, setLocale } = useI18n();
