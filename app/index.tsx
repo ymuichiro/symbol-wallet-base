@@ -1,6 +1,5 @@
 import { View, Text } from 'react-native';
 import { Link } from 'expo-router';
-import { useGetCurrentBalance } from '@/hooks/useGetCurrentBalance';
 
 export default function Root(): React.JSX.Element {
   return (
