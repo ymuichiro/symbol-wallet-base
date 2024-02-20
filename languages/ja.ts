@@ -8,7 +8,7 @@ const ja = {
     delete: '削除',
     add: '追加',
     edit: '編集',
-    punlickKey: '公開鍵',
+    publicKey: '公開鍵',
     privateKey: '秘密鍵',
     address: 'アドレス',
     balance: '残高',

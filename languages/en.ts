@@ -9,7 +9,7 @@ const en: typeof ja = {
     delete: 'Delete',
     add: 'Add',
     edit: 'Edit',
-    punlickKey: 'Public Key',
+    publicKey: 'Public Key',
     privateKey: 'Private Key',
     address: 'Address',
     balance: 'Balance',
