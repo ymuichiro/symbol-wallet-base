@@ -1,7 +1,6 @@
 import React from 'react';
 import { Button, View, Text } from 'react-native';
 import { Link } from 'expo-router';
-import { useLoadWallets } from '@/hooks/useLoadWallets';
 
 import { useI18n } from '@/hooks/useI18n';
 
@@ -14,7 +13,7 @@ export default function Root(): React.JSX.Element {
   const { isLoading, error, wallets } = useLoadWallets();
 
   console.log(isLoading, error, wallets);
-
+    
   return (
     <View className='flex-1 justify-center items-center gap-3'>
       <Text className='font-bold'>wallet 一覧と情報の表示</Text>
