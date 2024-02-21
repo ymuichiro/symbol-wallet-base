@@ -5,7 +5,7 @@ import {
   TransactionInfoDTO,
   TransactionPage,
   TransactionRoutesApi,
-} from '@/services/node-client';
+} from '@/services/NodeClientService';
 import { ConnectionError } from '@/models/ErrorModels';
 
 type Mode = 'confirmed' | 'unconfirmed' | 'partial';

@@ -5,7 +5,7 @@
 
 */
 import { NetworkType } from '@/models/NetworkModels';
-import { Configuration, NodeRoutesApi } from '@/services/node-client';
+import { Configuration, NodeRoutesApi } from '@/services/NodeClientService';
 import { STORAGE_KEYS } from '@/util/configs/storage-keys';
 import { AsyncStorage } from '@/util/storages/AsyncStorage';
 

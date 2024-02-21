@@ -10,7 +10,7 @@ import {
   MultisigRoutesApi,
   NamespaceRoutesApi,
   NetworkRoutesApi,
-} from '@/services/node-client';
+} from '@/services/NodeClientService';
 import { toAbsoluteAmount } from '@/util/symbol/amount';
 import { splitCurrency } from '@/util/symbol/mosaic';
 import { getNetworkTypeToAddressChatAt0 as getNetworkTypeToAddressCharAt0 } from '@/util/symbol/network';

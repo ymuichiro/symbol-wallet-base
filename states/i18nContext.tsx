@@ -1,7 +1,7 @@
 import { createContext, ReactNode, useState, useEffect, useRef } from 'react';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
 
-import { LanguageService } from '@/services/language/LanguageService';
+import { LanguageService } from '@/services/LanguageService';
 
 import en from '@/languages/en';
 import ja from '@/languages/ja';
