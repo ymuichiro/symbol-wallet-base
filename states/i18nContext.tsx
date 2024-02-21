@@ -1,6 +1,7 @@
 import { createContext, ReactNode, useState, useEffect, useRef } from 'react';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
 
+import useUpdateEffect from '@/hooks/useUpdateEffect';
 import { LanguageService } from '@/services/LanguageService';
 
 import en from '@/languages/en';
@@ -23,7 +24,6 @@ export const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [locale, setLocale] = useState('en');
-  const mountedRef = useRef(false);
 
   useEffect(() => {
     async function loadLocale() {
@@ -32,11 +32,9 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
     }
 
     loadLocale();
-    mountedRef.current = true;
   }, []);
 
-  useEffect(() => {
-    if (!mountedRef.current) return;
+  useUpdateEffect(() => {
     i18n.locale = locale;
     async function setLanguageCode() {
       await LanguageService.setLanguageCode(locale);
