@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useReducer, useRef, ReactNode } f
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import useUpdateEffect from '@/hooks/useUpdateEffect';
 import { reducer, initialState } from './reducer';
 import { AppState } from './types';
 
@@ -13,7 +14,6 @@ interface StateContextType {
 const StateContext = createContext<StateContextType | undefined>(undefined);
 
 export const StateProvider = ({ children }: { children: ReactNode }) => {
-  const mountedRef = useRef(false);
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
@@ -21,11 +21,9 @@ export const StateProvider = ({ children }: { children: ReactNode }) => {
       const storedState = await loadState();
       dispatch({ type: 'LOAD_STATE', payload: storedState || initialState });
     })();
-    mountedRef.current = true;
   }, []);
 
-  useEffect(() => {
-    if (!mountedRef.current) return;
+  useUpdateEffect(() => {
     saveState(state);
   }, [state]);
 
