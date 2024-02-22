@@ -17,6 +17,7 @@ i18n.defaultLocale = 'en';
 interface I18nContextType {
   t: (scope: Scope, options?: TranslateOptions) => string;
   locale: string;
+  isLoading: boolean;
   setLocale: (locale: string) => void;
 }
 
@@ -24,27 +25,27 @@ export const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 export const I18nProvider = ({ children }: { children: ReactNode }) => {
   const [locale, setLocale] = useState('en');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
-    async function loadLocale() {
-      const languageCode = await LanguageService.getLanguageCode();
+    setIsLoading(true);
+    LanguageService.getLanguageCode().then((languageCode) => {
       setLocale(languageCode);
-    }
-
-    loadLocale();
+      setIsLoading(true);
+    });
   }, []);
 
   useUpdateEffect(() => {
     i18n.locale = locale;
-    async function setLanguageCode() {
-      await LanguageService.setLanguageCode(locale);
-    }
-    setLanguageCode();
+    setIsLoading(true);
+    LanguageService.setLanguageCode(locale).then(() => {
+      setIsLoading(false);
+    });
   }, [locale]);
 
   // Note: `t`関数を直接Contextに渡すことで、i18nのインスタンスを直接渡す必要がなくなる
   // なのでuseEffectでのlocaleの変更が即座にコンポーネントに反映される
   const t = (scope: Scope, options?: TranslateOptions) => i18n.t(scope, { locale, ...options });
 
-  return <I18nContext.Provider value={{ t, locale, setLocale }}>{children}</I18nContext.Provider>;
+  return <I18nContext.Provider value={{ t, locale, setLocale, isLoading }}>{children}</I18nContext.Provider>;
 };
