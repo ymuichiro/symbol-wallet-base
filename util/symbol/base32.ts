@@ -71,7 +71,7 @@ const decodeBlock = (input: any, inputOffset: number, output: any, outputOffset:
  * @returns {string} The base32 encoded string corresponding to the input data.
  */
 export function base32Encode(data: Uint8Array): string {
-  if (0 !== data.length % Decoded_Block_Size) {
+  if (data.length % Decoded_Block_Size !== 0) {
     throw Error(`decoded size must be multiple of ${Decoded_Block_Size}`);
   }
   const output = new Array((data.length / Decoded_Block_Size) * Encoded_Block_Size);
@@ -87,7 +87,7 @@ export function base32Encode(data: Uint8Array): string {
  * @returns {Uint8Array} The binary data corresponding to the input string.
  */
 export function base32Decode(encoded: string): Uint8Array {
-  if (0 !== encoded.length % Encoded_Block_Size) {
+  if (encoded.length % Encoded_Block_Size !== 0) {
     throw Error(`encoded size must be multiple of ${Encoded_Block_Size}`);
   }
 

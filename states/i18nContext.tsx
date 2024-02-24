@@ -1,11 +1,10 @@
-import { createContext, ReactNode, useState, useEffect, useRef } from 'react';
 import { I18n, Scope, TranslateOptions } from 'i18n-js';
+import { createContext, ReactNode, useState, useEffect } from 'react';
 
 import useUpdateEffect from '@/hooks/useUpdateEffect';
-import { LanguageService } from '@/services/LanguageService';
-
 import en from '@/languages/en';
 import ja from '@/languages/ja';
+import { LanguageService } from '@/services/LanguageService';
 
 // I18nの初期設定
 const i18n = new I18n({

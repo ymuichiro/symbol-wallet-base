@@ -4,6 +4,8 @@
 
 */
 
+import { randomUUID } from 'expo-crypto';
+
 import { PrivateKeyModel, WalletModel } from '@/models/AccountModel';
 import { InvalidValueError } from '@/models/ErrorModels';
 import { NetworkType } from '@/models/NetworkModels';
@@ -12,7 +14,6 @@ import { PrivateKeyService } from '@/services/PrivateKeyService';
 import { STORAGE_KEYS } from '@/util/configs/storage-keys';
 import { AsyncStorage } from '@/util/storages/AsyncStorage';
 import { longTextToShort } from '@/util/text';
-import { randomUUID } from 'expo-crypto';
 
 /**
  * Manage Symbol Wallet
@@ -99,8 +100,8 @@ export class WalletService extends AsyncStorage {
     const data: WalletModel = {
       id: randomUUID(),
       name: longTextToShort(address.plain()),
-      networkType: networkType,
-      publicKey: publicKey,
+      networkType,
+      publicKey,
       privateKeyId: null,
       height: null,
     };

@@ -1,13 +1,9 @@
-import { useEffect, useState, FC } from 'react';
-
 import { Link } from 'expo-router';
+import { useEffect, useState } from 'react';
 import { Button, View, Text, TextInput } from 'react-native';
-
 import { useStateContext } from 'states/context';
 
-interface Props {}
-
-const NetworkPage: FC<Props> = (props: Props) => {
+export default function NetworkPage(): JSX.Element {
   const { state, dispatch } = useStateContext();
   const [nodeInput, setNodeInput] = useState('');
 
@@ -34,11 +30,9 @@ const NetworkPage: FC<Props> = (props: Props) => {
         placeholder='e,g) https://node.example.com:3000'
       />
       <Button title='設定' onPress={handlePressSetNode} />
-      <Link href={'/_sitemap'} className='text-blue-700 underline'>
+      <Link href='/_sitemap' className='text-blue-700 underline'>
         to sitemap
       </Link>
     </View>
   );
-};
-
-export default NetworkPage;
+}

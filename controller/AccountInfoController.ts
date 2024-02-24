@@ -59,7 +59,7 @@ export class AccountInfoController {
     // divisivility と、 namespace 情報を取得する
     const [mosaicsInfoDTO, namespaceInfoDTO] = await Promise.all([
       this.mosaicRoutes.getMosaics({ mosaicIds: { mosaicIds } }),
-      this.namespaceRoutes.getMosaicsNames({ mosaicIds: { mosaicIds: mosaicIds } }),
+      this.namespaceRoutes.getMosaicsNames({ mosaicIds: { mosaicIds } }),
     ]);
     // Mosaic の名前とAmountを解決する
     const resolvedMosaics: Mosaic[] = await Promise.all(

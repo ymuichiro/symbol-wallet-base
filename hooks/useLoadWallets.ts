@@ -1,7 +1,8 @@
+import { useState, useEffect } from 'react';
+
+import { AccountController } from '@/controller/AccountController';
 import { WalletModel } from '@/models/AccountModel';
 import { StorageError } from '@/models/ErrorModels';
-import { AccountController } from '@/controller/AccountController';
-import { useState, useEffect } from 'react';
 
 type ILoadWallets = {
   isLoading: boolean;
@@ -13,13 +14,14 @@ type ILoadWallets = {
  * component のマウント時に SecureStorage 上に格納されている wallet の一覧を取得する
  */
 export function useLoadWallets(): ILoadWallets {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [wallets, setWallets] = useState<WalletModel[]>([]);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     let unmounted = false;
     setIsLoading(true);
+    setError(null);
     AccountController.getWalletList()
       .then((w) => {
         if (unmounted) return;

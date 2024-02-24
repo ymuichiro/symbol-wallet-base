@@ -1,6 +1,7 @@
+import { useState, useEffect, useMemo } from 'react';
+
 import { AccountInfoController } from '@/controller/AccountInfoController';
 import { Mosaic } from '@/models/MosaicModel';
-import { useState, useEffect, useMemo } from 'react';
 
 type IResult = {
   isLoading: boolean;
@@ -23,7 +24,7 @@ type IResult = {
  * TODO: global context より現在選択されているノードを取得し、動的にノードを切り替える実装を行う
  */
 export function useGetCurrentBalance(address: string): IResult {
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [balance, setBalance] = useState<number>(0);
   const [mosaics, setMosaics] = useState<Mosaic[]>([]);
   const [error, setError] = useState<Error | null>(null);
