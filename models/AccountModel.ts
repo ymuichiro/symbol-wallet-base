@@ -19,3 +19,21 @@ export interface PrivateKeyModel {
 export interface MnemonicModel {
   mnemonic: string;
 }
+
+/** 連絡帳向け */
+export interface ContactModel {
+  /** uuid */
+  id: string;
+  /** ネットワークタイプ */
+  networkType: string;
+  /** 任意の名称 */
+  name: string;
+  /** アドレス */
+  address: string;
+  /** 公開鍵 */
+  publicKey: string;
+  /** メモ */
+  remark: string;
+  /** グループ */
+  group: string;
+}
