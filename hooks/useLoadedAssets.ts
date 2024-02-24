@@ -1,9 +1,10 @@
-import { AccountController } from '@/controller/AccountController';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import * as Font from 'expo-font';
 import { router } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect, useState } from 'react';
+
+import { AccountController } from '@/controller/AccountController';
 
 export function useLoadedAssets(): boolean {
   const [isLoadingComplete, setLoadingComplete] = useState(false);

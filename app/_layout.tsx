@@ -1,7 +1,8 @@
 import '../shim';
-import { usePathname, Stack, Link, router, SplashScreen } from 'expo-router';
 import IonIcon from '@expo/vector-icons/Ionicons';
+import { usePathname, Stack, Link, router, SplashScreen } from 'expo-router';
 import { Pressable, useColorScheme } from 'react-native';
+
 import { useLoadedAssets } from '@/hooks/useLoadedAssets';
 import { StateProvider } from '@/states/context';
 import { I18nProvider } from '@/states/i18nContext';
@@ -19,7 +20,7 @@ export default function RootLayout(): JSX.Element {
 
   const handleHeaderRightClickForPage = () => {
     return (
-      <Link href={'/account'}>
+      <Link href='/account'>
         <IonIcon name='person-circle-outline' size={28} />
       </Link>
     );

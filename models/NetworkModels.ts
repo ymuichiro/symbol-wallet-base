@@ -1,9 +1,17 @@
+import { NetworkService } from '@/services/NetworkService';
+
 export type NetworkType = 'testnet' | 'mainnet';
+export type ConnectionStatus = 'connected' | 'disconnected';
 
 export interface NodeInfo {
   networkIdentifier: 104 | 152;
   restGatewayUrl: string;
   friendlyName: string;
+}
+
+export interface NetworkInfo {
+  network: NetworkService;
+  connection: ConnectionStatus;
 }
 
 export interface NetworkProperty {

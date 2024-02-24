@@ -23,7 +23,9 @@ export class NodeStatisticsService extends AsyncStorage {
   }
 
   /** 統計サーバーよりノードの一覧を取得する */
-  private async getNodeList(): Promise<NodeInfo[]> {
+  private async getNodeListByStatistics(): Promise<NodeInfo[]> {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 5000);
     try {
       const header = new Headers();
       header.append('Accept', 'application/json');
@@ -33,6 +35,7 @@ export class NodeStatisticsService extends AsyncStorage {
         method: 'GET',
         headers: header,
         cache: 'no-cache',
+        signal: controller.signal,
       });
 
       const statisticsResult = await res.json();
@@ -43,6 +46,13 @@ export class NodeStatisticsService extends AsyncStorage {
         if (!e.apiStatus.isHttpsEnabled || !e.apiStatus.isAvailable) continue;
         // allnodes ノードは除外
         if (e.apiStatus.restGatewayUrl.includes('.allnodes.me:')) continue;
+        // URL バリデーション
+        try {
+          // eslint-disable-next-line no-new
+          new URL(e.apiStatus.restGatewayUrl);
+        } catch {
+          continue;
+        }
         nodeInfoList.push({
           friendlyName: e.friendlyName,
           networkIdentifier: e.networkIdentifier,
@@ -53,6 +63,8 @@ export class NodeStatisticsService extends AsyncStorage {
     } catch (err) {
       console.error(err);
       throw new ConnectionError(`Statistics Server ${this.statisticsServer} Error`);
+    } finally {
+      clearTimeout(timeout);
     }
   }
 
@@ -60,7 +72,7 @@ export class NodeStatisticsService extends AsyncStorage {
   private async setNodeList(nodeList: NodeInfo[]): Promise<void> {
     const storageData: StorageModel = {
       expire: new Date().getTime() + NodeStatisticsService.CACHE_EXPIRE_TIME,
-      nodeList: nodeList,
+      nodeList,
     };
     await this.setItem(JSON.stringify(storageData));
   }
@@ -72,7 +84,7 @@ export class NodeStatisticsService extends AsyncStorage {
   }
 
   /** NodeInfo[] を取得する */
-  public async getNodeInfoList(): Promise<NodeInfo[]> {
+  public async getNodeList(): Promise<NodeInfo[]> {
     const storageData: StorageModel | null = JSON.parse(await this.getItem());
 
     // storageData が null ではなく、かつ expire の期限を超過していない場合、storageData をそのまま返却する
@@ -80,7 +92,7 @@ export class NodeStatisticsService extends AsyncStorage {
       return storageData.nodeList;
     } else {
       // 既存のデータが存在しない、またはキャッシュが古い場合、統計サーバーより再取得を行う
-      const nodeList: NodeInfo[] = await this.getNodeList();
+      const nodeList: NodeInfo[] = await this.getNodeListByStatistics();
       this.setNodeList(nodeList);
       return nodeList;
     }

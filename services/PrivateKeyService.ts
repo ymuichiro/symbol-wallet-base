@@ -5,14 +5,15 @@
 
 */
 
-import { STORAGE_KEYS } from '@/util/configs/storage-keys';
-import { SecureStorage } from '@/util/storages/SecureStorage';
-import nacl from 'tweetnacl';
 import { getRandomBytes, randomUUID } from 'expo-crypto';
-import { NetworkType } from '@/models/NetworkModels';
-import { AddressService } from '@/services/AddressService';
+import nacl from 'tweetnacl';
+
 import { PrivateKeyModel } from '@/models/AccountModel';
 import { InvalidValueError } from '@/models/ErrorModels';
+import { NetworkType } from '@/models/NetworkModels';
+import { AddressService } from '@/services/AddressService';
+import { STORAGE_KEYS } from '@/util/configs/storage-keys';
+import { SecureStorage } from '@/util/storages/SecureStorage';
 
 /**
  * Manage Symbol Account PrivateKey

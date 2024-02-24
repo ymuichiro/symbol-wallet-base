@@ -4,11 +4,12 @@
 
 */
 
+import { MnemonicPassPhrase, ExtendedKey, Wallet, Network } from 'symbol-hd-wallets';
+
 import { MnemonicModel } from '@/models/AccountModel';
 import { InvalidValueError, StorageError } from '@/models/ErrorModels';
 import { STORAGE_KEYS } from '@/util/configs/storage-keys';
 import { SecureStorage } from '@/util/storages/SecureStorage';
-import { MnemonicPassPhrase, ExtendedKey, Wallet, Network } from 'symbol-hd-wallets';
 
 export class MnemonicService extends SecureStorage {
   /**
@@ -70,7 +71,7 @@ export class MnemonicService extends SecureStorage {
   public getChildAddresses(start: number = 0, end: number = 30): string[] {
     const xkey = ExtendedKey.createFromSeed(this.seed, Network.SYMBOL);
     const wallet = new Wallet(xkey);
-    let addresses: string[] = [];
+    const addresses: string[] = [];
     for (let i = start; i <= end; i++) {
       addresses.push(wallet.getChildAccountPrivateKey(`m/44'/4343'/0'/0'/${i}'`));
     }

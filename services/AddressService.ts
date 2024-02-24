@@ -5,12 +5,13 @@
 
 */
 
+import { sha3_256 } from 'js-sha3';
+import ripemd160 from 'ripemd160';
+
 import { NetworkType } from '@/models/NetworkModels';
 import { rawArrayCopy, rawArrayDeepEqual, rawArrayUint8View } from '@/util/symbol/array';
 import { base32Decode, base32Encode } from '@/util/symbol/base32';
 import { strNetworkTypeToHexadecimal } from '@/util/symbol/network';
-import { sha3_256 } from 'js-sha3';
-import ripemd160 from 'ripemd160';
 
 /**
  * Manage Symbol Account Address
@@ -137,7 +138,7 @@ export class AddressService {
     }
     try {
       return this.isValidAddress(this.stringToAddress(rawAddress));
-    } catch (err) {
+    } catch {
       return false;
     }
   };

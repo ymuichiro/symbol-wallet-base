@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+
+import { ConnectionError } from '@/models/ErrorModels';
 import {
   Configuration,
   SearchConfirmedTransactionsRequest,
@@ -6,7 +8,6 @@ import {
   TransactionPage,
   TransactionRoutesApi,
 } from '@/services/NodeClientService';
-import { ConnectionError } from '@/models/ErrorModels';
 
 type Mode = 'confirmed' | 'unconfirmed' | 'partial';
 
