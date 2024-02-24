@@ -28,7 +28,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     setIsLoading(true);
-    LanguageService.getLanguageCode().then((languageCode) => {
+    new LanguageService().getLanguageCode().then((languageCode) => {
       setLocale(languageCode);
       setIsLoading(true);
     });
@@ -37,7 +37,7 @@ export const I18nProvider = ({ children }: { children: ReactNode }) => {
   useUpdateEffect(() => {
     i18n.locale = locale;
     setIsLoading(true);
-    LanguageService.setLanguageCode(locale).then(() => {
+    new LanguageService().setLanguageCode(locale).then(() => {
       setIsLoading(false);
     });
   }, [locale]);

@@ -1,13 +1,15 @@
 import { getLocales } from 'expo-localization';
 
+import { STORAGE_KEYS } from '@/util/configs/storage-keys';
 import { AsyncStorage } from '@/util/storages/AsyncStorage';
 
-const STORAGE_KEY = 'LANGUAGE_SERVICE';
+export class LanguageService extends AsyncStorage {
+  public constructor() {
+    super(STORAGE_KEYS.async.LANGUAGE);
+  }
 
-export class LanguageService {
-  public static async getLanguageCode(): Promise<string> {
-    const storage = new AsyncStorage(STORAGE_KEY);
-    const item = await storage.getItem();
+  public async getLanguageCode(): Promise<string> {
+    const item = await this.getItem();
     if (!item) {
       // 端末で設定されている言語を返す
       const { languageCode } = getLocales()[0];
@@ -16,8 +18,7 @@ export class LanguageService {
     return item;
   }
 
-  public static async setLanguageCode(languageCode: string) {
-    const storage = new AsyncStorage(STORAGE_KEY);
-    await storage.setItem(languageCode);
+  public async setLanguageCode(languageCode: string) {
+    await this.setItem(languageCode);
   }
 }
