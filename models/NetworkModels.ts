@@ -6,6 +6,7 @@ export type ConnectionStatus = 'connected' | 'disconnected';
 export interface NodeInfo {
   networkIdentifier: 104 | 152;
   restGatewayUrl: string;
+  websocketUrl: string;
   friendlyName: string;
 }
 
