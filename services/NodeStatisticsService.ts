@@ -41,15 +41,17 @@ export class NodeStatisticsService extends AsyncStorage {
       const statisticsResult = await res.json();
       const nodeInfoList: NodeInfo[] = [];
       for (const e of statisticsResult) {
-        // apiStatus or isAvailable が false の場合は除外 かつ allnodes を除外
+        // apiStatus or isAvailable が false の場合は除外 + allnodes を除外 + websocket 無効は除外
         if (!e.apiStatus) continue;
         if (!e.apiStatus.isHttpsEnabled || !e.apiStatus.isAvailable) continue;
-        // allnodes ノードは除外
         if (e.apiStatus.restGatewayUrl.includes('.allnodes.me:')) continue;
+        if (!e.apiStatus.webSocket.isAvailable || !e.apiStatus.webSocket.wss) continue;
         // URL バリデーション
         try {
           // eslint-disable-next-line no-new
           new URL(e.apiStatus.restGatewayUrl);
+          // eslint-disable-next-line no-new
+          new URL(e.apiStatus.webSocket.url);
         } catch {
           continue;
         }
@@ -57,6 +59,7 @@ export class NodeStatisticsService extends AsyncStorage {
           friendlyName: e.friendlyName,
           networkIdentifier: e.networkIdentifier,
           restGatewayUrl: e.apiStatus.restGatewayUrl,
+          websocketUrl: e.apiStatus.webSocket.url,
         });
       }
       return nodeInfoList;
